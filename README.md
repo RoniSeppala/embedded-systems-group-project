@@ -23,6 +23,7 @@
 - critical handling + write error handling
 - maybe uart for debuging
 - board configs and pin mapping
+- deep sleep (maybe timer0)
 ## Arduino Mega
 - design mcu.h
 - main switch case
@@ -32,6 +33,7 @@
 ## Arduino Uno
 - design mcu.h
 - buzzer, play one melody 
+  - **redesign timer1 to function with ATmega328p**
 - activate led
 
 # to test
@@ -41,13 +43,20 @@
 ## both master and slave
 | module name | description | notes |
 |-|-|-|
-| | | |
+| main.c | houses inits and loop | |
+| mcu.h | houses mcu related definitions | |
 ## master (ATmega2560, Arduino Mega)
 | module name | description | notes |
 |-|-|-|
-| | | |
+| delay | provides delay functions | premade |
+| keypad | provides fuctions for using the keypad | premade |
+| lcd | provides functions for using the lcd | premade |
+| stdutils.h | neede by keypad, provides definitions | premade |
 
 ## slave (ATmega328p, Arduino Uno)
 | module name | description | notes |
 |-|-|-|
-| | | |
+| tune.h | holds the definitions for notes and playing them | |
+| timer1 | provides a timer to deal with playing the notes | |
+| melodies.h | holds the melody lisist | |
+| bit_ops | provides functions for bit operations | |
