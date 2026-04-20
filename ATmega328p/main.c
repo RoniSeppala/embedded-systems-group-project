@@ -1,5 +1,9 @@
 #include "mcu.h"
 
+#define PBM 90
+#include "tune.h"
+#include "melodies.h"
+
 // TODO: add error handling
 
 int main(void)

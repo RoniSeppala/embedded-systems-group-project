@@ -13,7 +13,8 @@
 - led
 
 # modules to do:
-- critical handling
+## to both
+- critical handling + write error handling
 - maybe uart for debuging
 ## Arduino Mega
 - design mcu.h
@@ -25,3 +26,6 @@
 - design mcu.h
 - buzzer, play one melody 
 - activate led
+
+# to test
+- breaking of melodies into its own file as well as the if not defined in pbm, might cause issues
