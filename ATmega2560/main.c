@@ -1,4 +1,5 @@
 #include "mcu.h"
+#include "keypad.h"
 
 
 // TODO: add error handling
