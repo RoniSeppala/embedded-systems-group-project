@@ -22,6 +22,7 @@
 ## to both
 - critical handling + write error handling
 - maybe uart for debuging
+- board configs and pin mapping
 ## Arduino Mega
 - design mcu.h
 - main switch case
@@ -35,3 +36,18 @@
 
 # to test
 - breaking of melodies into its own file as well as the if not defined in pbm, might cause issues
+
+# modules
+## both master and slave
+| module name | description | notes |
+|-|-|-|
+| | | |
+## master (ATmega2560, Arduino Mega)
+| module name | description | notes |
+|-|-|-|
+| | | |
+
+## slave (ATmega328p, Arduino Uno)
+| module name | description | notes |
+|-|-|-|
+| | | |
