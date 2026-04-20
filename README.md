@@ -35,13 +35,14 @@
 - buzzer, play one melody 
   - **redesign timer1 to function with ATmega328p**
 - activate led
+  - **maybe add pin_config c and h??**
 
 ### clear todo list
 - state machine (arduino mega, switch case)
 - keypad functionality (arduino mega)
 - lcd feedback (Arduino mega)
 - microcontroller communication
-- led indicators (arduino uno)
+- led indicators (arduino uno, maybe add pin_config c and h??)
 - buzzer (arduino uno)
 
 #### done
