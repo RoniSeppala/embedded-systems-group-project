@@ -11,3 +11,15 @@
 ## Arduino Uno (ATmega328p) - Slave
 - buzzer
 - led
+
+# modules to do:
+## Arduino Mega
+- design mcu.h
+- main switch case
+- keypad input
+- lcd
+
+## Arduino Uno
+- design mcu.h
+- buzzer, play one melody 
+- activate led
