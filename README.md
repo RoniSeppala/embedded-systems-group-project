@@ -12,6 +12,12 @@
 - buzzer
 - led
 
+## pre made, copied files (might include edits if permited by licence)
+- keypad h and c
+- lcd h and c
+- stdutils.h
+- delay h and c
+
 # modules to do:
 ## to both
 - critical handling + write error handling
