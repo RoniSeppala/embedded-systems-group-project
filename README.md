@@ -45,6 +45,7 @@
 |-|-|-|
 | main.c | houses inits and loop | |
 | mcu.h | houses mcu related definitions | |
+| board_config.h | does pin mapping | |
 ## master (ATmega2560, Arduino Mega)
 | module name | description | notes |
 |-|-|-|
