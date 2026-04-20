@@ -1,6 +1,10 @@
 #include "mcu.h"
-#include "keypad.h"
+#include "uart.h"
+#include "board_config.h"
+#include "bit_ops.h"
 
+#include "keypad.h"
+#include "lcd.h"
 
 // TODO: add error handling
 

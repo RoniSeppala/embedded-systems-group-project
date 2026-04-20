@@ -36,6 +36,16 @@
   - **redesign timer1 to function with ATmega328p**
 - activate led
 
+### clear todo list
+- state machine (arduino mega, switch case)
+- keypad functionality (arduino mega)
+- lcd feedback (Arduino mega)
+- microcontroller communication
+- led indicators (arduino uno)
+- buzzer (arduino uno)
+
+#### done
+
 # to test
 - breaking of melodies into its own file as well as the if not defined in pbm, might cause issues
 
@@ -46,6 +56,8 @@
 | main.c | houses inits and loop | |
 | mcu.h | houses mcu related definitions | |
 | board_config.h | does pin mapping | |
+| bit_ops | provides functions for bit operations | |
+| uart | allows uart communication | mainly for debuging, allows printf, uart.c premade |
 ## master (ATmega2560, Arduino Mega)
 | module name | description | notes |
 |-|-|-|
@@ -60,4 +72,3 @@
 | tune.h | holds the definitions for notes and playing them | |
 | timer1 | provides a timer to deal with playing the notes | |
 | melodies.h | holds the melody lisist | |
-| bit_ops | provides functions for bit operations | |
