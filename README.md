@@ -13,6 +13,8 @@
 - led
 
 # modules to do:
+- critical handling
+- maybe uart for debuging
 ## Arduino Mega
 - design mcu.h
 - main switch case
