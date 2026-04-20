@@ -44,6 +44,8 @@
 - microcontroller communication
 - led indicators (arduino uno, maybe add pin_config c and h??)
 - buzzer (arduino uno)
+- queued floor requests??
+- sleep??
 
 #### done
 
