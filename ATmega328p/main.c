@@ -13,6 +13,9 @@
 #include "elevator_protocol.h"
 #include "i2c_slave.h"
 
+// mega output handling
+#include "outputs.h"
+
 
 // TODO: add error handling
 
@@ -50,6 +53,7 @@ int main(void)
     uint8_t command;
 
     i2c_slave_init(ELEVATOR_I2C_ADDRESS);
+    outputs_init();
 
     while (1)
     {
