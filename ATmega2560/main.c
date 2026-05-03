@@ -3,14 +3,8 @@
 #include "board_config.h"
 #include "bit_ops.h"
 
-#include "keypad.h"
-#include "lcd.h"
-
-
-//i2c coms includes
-#include "elevator_protocol.h"
-#include "i2c_master.h"
-
+// elevator controller
+#include "elevator_controller.h"
 
 // TODO: add error handling
 
@@ -20,14 +14,12 @@
 int main(void)
 {
     // run in the beginning
-    // i2c init
-    i2c_master_init();
-
-    i2c_master_send_byte(ELEVATOR_I2C_ADDRESS, ELEVATOR_CMD_ALL_OFF);
+    elevator_controller_init();
 
     while (1)
     {
         // loop
+        elevator_controller_run();
     }
  
     return 0;
