@@ -61,6 +61,7 @@
 | board_config.h | does pin mapping | |
 | bit_ops | provides functions for bit operations | |
 | uart | allows uart communication | mainly for debuging, allows printf, uart.c premade |
+
 ## master (ATmega2560, Arduino Mega)
 | module name | description | notes |
 |-|-|-|
@@ -75,3 +76,7 @@
 | tune.h | holds the definitions for notes and playing them | |
 | timer1 | provides a timer to deal with playing the notes | |
 | melodies.h | holds the melody lisist | |
+
+
+# AI notice
+ChatGPT-5.5 Thinking Extended was used in project planning, error checking and debuging
