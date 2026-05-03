@@ -156,6 +156,36 @@ static void elevator_read_floor_input(void)
 }
 
 // elevator code
+// elevator state handlers
+static void elevator_handle_idle(void)
+{
+    elevator_read_floor_input();
+}
+
+static void elevator_handle_going_up(void)
+{
+}
+
+static void elevator_handle_going_down(void)
+{
+}
+
+static void elevator_handle_door_opening(void)
+{
+}
+
+static void elevator_handle_door_closing(void)
+{
+}
+
+static void elevator_handle_obstacle_detection(void)
+{
+}
+
+static void elevator_handle_fault(void)
+{
+}
+
 void elevator_controller_init(void)
 {
     current_state = ELEVATOR_STATE_IDLE;
@@ -174,8 +204,39 @@ void elevator_controller_init(void)
 // elevator logic
 void elevator_controller_run(void)
 {
-    if (current_state == ELEVATOR_STATE_IDLE)
+    switch (current_state)
     {
-        elevator_read_floor_input();
+        case ELEVATOR_STATE_IDLE:
+            elevator_handle_idle();
+            break;
+
+        case ELEVATOR_STATE_GOING_UP:
+            elevator_handle_going_up();
+            break;
+
+        case ELEVATOR_STATE_GOING_DOWN:
+            elevator_handle_going_down();
+            break;
+
+        case ELEVATOR_STATE_DOOR_OPENING:
+            elevator_handle_door_opening();
+            break;
+
+        case ELEVATOR_STATE_DOOR_CLOSING:
+            elevator_handle_door_closing();
+            break;
+
+        case ELEVATOR_STATE_OBSTACLE_DETECTION:
+            elevator_handle_obstacle_detection();
+            break;
+
+        case ELEVATOR_STATE_FAULT:
+            elevator_handle_fault();
+            break;
+
+        default:
+            current_state = ELEVATOR_STATE_IDLE;
+            elevator_display_idle();
+            break;
     }
 }
