@@ -3,11 +3,6 @@
 #include "board_config.h"
 #include "bit_ops.h"
 
-#define PBM 90
-// #include "tune.h" //TODO: is this neede
-#include "melodies.h"
-#include "timer1.h"
-
 //elevator init
 #include <stdint.h>
 #include "elevator_protocol.h"

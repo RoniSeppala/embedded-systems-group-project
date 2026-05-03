@@ -2,6 +2,7 @@
 #define OUTPUTS_H
 
 void outputs_init(void);
+void outputs_update(void);
 
 void outputs_all_off(void);
 void outputs_set_movement(void);
