@@ -224,6 +224,8 @@ static void elevator_handle_idle(void)
 
 static void elevator_handle_going_up(void)
 {
+    i2c_master_send_byte(ELEVATOR_I2C_ADDRESS, ELEVATOR_CMD_MOVING);
+
     while (current_floor < target_floor)
     {
         current_floor++;
@@ -231,17 +233,22 @@ static void elevator_handle_going_up(void)
         elevator_delay_ms(ELEVATOR_FLOOR_DELAY_MS);
     }
 
+    i2c_master_send_byte(ELEVATOR_I2C_ADDRESS, ELEVATOR_CMD_ALL_OFF);
+
     current_state = ELEVATOR_STATE_DOOR_OPENING;
 }
 
 static void elevator_handle_going_down(void)
 {
+    i2c_master_send_byte(ELEVATOR_I2C_ADDRESS, ELEVATOR_CMD_MOVING);
     while (current_floor > target_floor)
     {
         current_floor--;
         elevator_display_moving("Going down");
         elevator_delay_ms(ELEVATOR_FLOOR_DELAY_MS);
     }
+
+    i2c_master_send_byte(ELEVATOR_I2C_ADDRESS, ELEVATOR_CMD_ALL_OFF);
 
     current_state = ELEVATOR_STATE_DOOR_OPENING;
 }
@@ -250,6 +257,8 @@ static void elevator_handle_door_opening(void)
 {
     uint8_t obstacle_detected;
 
+    i2c_master_send_byte(ELEVATOR_I2C_ADDRESS, ELEVATOR_CMD_DOOR_OPENING);
+
     lcd_clrscr();
     lcd_gotoxy(0, 0);
     lcd_puts("Door open");
@@ -257,6 +266,8 @@ static void elevator_handle_door_opening(void)
     lcd_puts("* = obstacle");
 
     obstacle_detected = elevator_wait_for_obstacle_trigger(ELEVATOR_DOOR_OPEN_DELAY_MS);
+
+    i2c_master_send_byte(ELEVATOR_I2C_ADDRESS, ELEVATOR_CMD_ALL_OFF);
 
     if (obstacle_detected)
     {
@@ -270,11 +281,15 @@ static void elevator_handle_door_opening(void)
 
 static void elevator_handle_door_closing(void)
 {
+    i2c_master_send_byte(ELEVATOR_I2C_ADDRESS, ELEVATOR_CMD_DOOR_CLOSING);
+
     lcd_clrscr();
     lcd_gotoxy(0, 0);
     lcd_puts("Door closing");
 
     elevator_delay_ms(ELEVATOR_DOOR_CLOSE_DELAY_MS);
+
+    i2c_master_send_byte(ELEVATOR_I2C_ADDRESS, ELEVATOR_CMD_ALL_OFF);
 
     current_state = ELEVATOR_STATE_IDLE;
     elevator_display_idle();
@@ -282,6 +297,8 @@ static void elevator_handle_door_closing(void)
 
 static void elevator_handle_obstacle_detection(void)
 {
+    i2c_master_send_byte(ELEVATOR_I2C_ADDRESS, ELEVATOR_CMD_OBSTACLE);
+
     lcd_clrscr();
     lcd_gotoxy(0, 0);
     lcd_puts("Obstacle");
@@ -290,11 +307,16 @@ static void elevator_handle_obstacle_detection(void)
 
     KEYPAD_GetKey();
 
+    i2c_master_send_byte(ELEVATOR_I2C_ADDRESS, ELEVATOR_CMD_BUZZER_STOP);
+    i2c_master_send_byte(ELEVATOR_I2C_ADDRESS, ELEVATOR_CMD_ALL_OFF);
+
     current_state = ELEVATOR_STATE_DOOR_CLOSING;
 }
 
 static void elevator_handle_fault(void)
 {
+    i2c_master_send_byte(ELEVATOR_I2C_ADDRESS, ELEVATOR_CMD_ALL_OFF);
+    
     lcd_clrscr();
     lcd_gotoxy(0, 0);
     lcd_puts("Same floor");
