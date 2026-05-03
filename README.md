@@ -77,6 +77,57 @@
 | timer1 | provides a timer to deal with playing the notes | |
 | melodies.h | holds the melody lisist | |
 
+# pin mapping
+## mega
+### lcd
+| mega pin | description | 
+|-|-|
+| D3 | data0/D4 |
+| D4 | data1/D5 |
+| D5 | data2/D6 |
+| D6 | data3/D7 |
+| D9 | RS |
+| D10 | RW |
+| D11 | E |
+
+### keypad
+| mega pin | description | 
+|-|-|
+| A8 | C0 |
+| A9 | C1 |
+| A10 | C2 |
+| A11 | C3 |
+| A12 | R0 |
+| A13 | R1 |
+| A14 | R2 |
+| A15 | R3 |
+### I2C
+| mega pin | description(uno pin) | 
+|-|-|
+| D20/SDA | A4/SDA |
+| D21/SCL | A5/SCL |
+| GND | GND |
+
+## uno
+### LEDS
+| uno pin | description | 
+|-|-|
+| D2 | Movement Led |
+| D3 | Door Opening Led |
+| D4 | Door Closing Led |
+| D5 | Obstacle Led |
+
+### Other
+| uno pin | description | 
+|-|-|
+| D9 | Buzzer |
+
+### I2C
+| uno pin | description(mega pin) | 
+|-|-|
+| A4/SDA | D20/SDA | 
+| A5/SCL | D21/SCL | 
+| GND | GND | 
 
 # AI notice
 ChatGPT-5.5 Thinking Extended was used in project planning, error checking and debuging
