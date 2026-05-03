@@ -262,3 +262,85 @@ static uint8_t keypad_ScanKey()
 	var_keyPress_u8 = var_keyPress_u8 + (var_keyScanCode_u8 & 0xf0); // Return the row and COL status to decode the key
 	return(var_keyPress_u8);
 }
+
+
+// personal additions
+uint8_t KEYPAD_GetCurrentKey(void) // non blocking get key implementation
+{
+    uint8_t key;
+
+    key = keypad_ScanKey();
+
+    switch (key)
+    {
+        case 0xe7:
+            key = '*';
+            break;
+
+        case 0xeb:
+            key = '7';
+            break;
+
+        case 0xed:
+            key = '4';
+            break;
+
+        case 0xee:
+            key = '1';
+            break;
+
+        case 0xd7:
+            key = '0';
+            break;
+
+        case 0xdb:
+            key = '8';
+            break;
+
+        case 0xdd:
+            key = '5';
+            break;
+
+        case 0xde:
+            key = '2';
+            break;
+
+        case 0xb7:
+            key = '#';
+            break;
+
+        case 0xbb:
+            key = '9';
+            break;
+
+        case 0xbd:
+            key = '6';
+            break;
+
+        case 0xbe:
+            key = '3';
+            break;
+
+        case 0x77:
+            key = 'D';
+            break;
+
+        case 0x7b:
+            key = 'C';
+            break;
+
+        case 0x7d:
+            key = 'B';
+            break;
+
+        case 0x7e:
+            key = 'A';
+            break;
+
+        default:
+            key = 'z';
+            break;
+    }
+
+    return key;
+}

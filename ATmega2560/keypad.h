@@ -64,6 +64,9 @@ void KEYPAD_Init();
 void KEYPAD_WaitForKeyRelease();
 void KEYPAD_WaitForKeyPress();
 uint8_t KEYPAD_GetKey();
+
+// personal additions 
+uint8_t KEYPAD_GetCurrentKey(void);
 /**************************************************************************************************/
 
 #endif

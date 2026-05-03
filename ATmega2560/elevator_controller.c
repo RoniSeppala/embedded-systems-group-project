@@ -1,6 +1,7 @@
 // general includes
 #include <stdint.h>
 #include "mcu.h"
+#include "delay.h"
 
 // hw libraries
 #include "keypad.h"
@@ -19,6 +20,11 @@
 #define KEYPAD_CONFIRM_KEY '#'
 #define KEYPAD_CLEAR_KEY '*'
 #define ELEVATOR_INITIAL_FLOOR (0u)
+#define ELEVATOR_FLOOR_DELAY_MS (500u)
+#define ELEVATOR_DOOR_OPEN_DELAY_MS (3000u)
+#define ELEVATOR_DOOR_CLOSE_DELAY_MS (2000u)
+#define ELEVATOR_FAULT_DELAY_MS (1500u)
+#define ELEVATOR_OBSTACLE_POLL_DELAY_MS (50u)
 
 typedef enum
 {
@@ -42,13 +48,18 @@ static uint8_t is_digit_key(uint8_t key)
     return ((key >= '0') && (key <= '9'));
 }
 
+static void elevator_lcd_print_floor(uint8_t floor)
+{
+    lcd_putc((floor / 10u) + '0');
+    lcd_putc((floor % 10u) + '0');
+}
+
 static void elevator_display_current_floor(void)
 {
     lcd_gotoxy(0, 1);
     lcd_puts("Current: ");
 
-    lcd_putc((current_floor / 10u) + '0');
-    lcd_putc((current_floor % 10u) + '0');
+    elevator_lcd_print_floor(current_floor);
     lcd_puts("      ");
 }
 
@@ -155,6 +166,46 @@ static void elevator_read_floor_input(void)
     }
 }
 
+static void elevator_display_moving(const char *direction_text)
+{
+    lcd_clrscr();
+
+    lcd_gotoxy(0, 0);
+    lcd_puts(direction_text);
+
+    lcd_gotoxy(0, 1);
+    lcd_puts("Current: ");
+    elevator_lcd_print_floor(current_floor);
+}
+
+static uint8_t elevator_wait_for_obstacle_trigger(uint16_t timeout_ms)
+{
+    uint8_t key;
+
+    while (timeout_ms > 0u)
+    {
+        key = KEYPAD_GetCurrentKey();
+
+        if (key == KEYPAD_CLEAR_KEY)
+        {
+            return 1u;
+        }
+
+        elevator_delay_ms(ELEVATOR_OBSTACLE_POLL_DELAY_MS);
+
+        if (timeout_ms > ELEVATOR_OBSTACLE_POLL_DELAY_MS)
+        {
+            timeout_ms -= ELEVATOR_OBSTACLE_POLL_DELAY_MS;
+        }
+        else
+        {
+            timeout_ms = 0u;
+        }
+    }
+
+    return 0u;
+}
+
 // elevator code
 // elevator state handlers
 static void elevator_handle_idle(void)
@@ -164,26 +215,85 @@ static void elevator_handle_idle(void)
 
 static void elevator_handle_going_up(void)
 {
+    while (current_floor < target_floor)
+    {
+        current_floor++;
+        elevator_display_moving("Going up");
+        elevator_delay_ms(ELEVATOR_FLOOR_DELAY_MS);
+    }
+
+    current_state = ELEVATOR_STATE_DOOR_OPENING;
 }
 
 static void elevator_handle_going_down(void)
 {
+    while (current_floor > target_floor)
+    {
+        current_floor--;
+        elevator_display_moving("Going down");
+        elevator_delay_ms(ELEVATOR_FLOOR_DELAY_MS);
+    }
+
+    current_state = ELEVATOR_STATE_DOOR_OPENING;
 }
 
 static void elevator_handle_door_opening(void)
 {
+    uint8_t obstacle_detected;
+
+    lcd_clrscr();
+    lcd_gotoxy(0, 0);
+    lcd_puts("Door open");
+    lcd_gotoxy(0, 1);
+    lcd_puts("* = obstacle");
+
+    obstacle_detected = elevator_wait_for_obstacle_trigger(ELEVATOR_DOOR_OPEN_DELAY_MS);
+
+    if (obstacle_detected)
+    {
+        current_state = ELEVATOR_STATE_OBSTACLE_DETECTION;
+    }
+    else
+    {
+        current_state = ELEVATOR_STATE_DOOR_CLOSING;
+    }
 }
 
 static void elevator_handle_door_closing(void)
 {
+    lcd_clrscr();
+    lcd_gotoxy(0, 0);
+    lcd_puts("Door closing");
+
+    elevator_delay_ms(ELEVATOR_DOOR_CLOSE_DELAY_MS);
+
+    current_state = ELEVATOR_STATE_IDLE;
+    elevator_display_idle();
 }
 
 static void elevator_handle_obstacle_detection(void)
 {
+    lcd_clrscr();
+    lcd_gotoxy(0, 0);
+    lcd_puts("Obstacle");
+    lcd_gotoxy(0, 1);
+    lcd_puts("Press any key");
+
+    KEYPAD_GetKey();
+
+    current_state = ELEVATOR_STATE_DOOR_CLOSING;
 }
 
 static void elevator_handle_fault(void)
 {
+    lcd_clrscr();
+    lcd_gotoxy(0, 0);
+    lcd_puts("Same floor");
+
+    elevator_delay_ms(ELEVATOR_FAULT_DELAY_MS);
+
+    current_state = ELEVATOR_STATE_IDLE;
+    elevator_display_idle();
 }
 
 void elevator_controller_init(void)
