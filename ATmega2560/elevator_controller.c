@@ -178,6 +178,15 @@ static void elevator_display_moving(const char *direction_text)
     elevator_lcd_print_floor(current_floor);
 }
 
+static void elevator_delay_ms(uint16_t milliseconds)
+{
+    while (milliseconds > 0u)
+    {
+        DELAY_ms(1);
+        milliseconds--;
+    }
+}
+
 static uint8_t elevator_wait_for_obstacle_trigger(uint16_t timeout_ms)
 {
     uint8_t key;
