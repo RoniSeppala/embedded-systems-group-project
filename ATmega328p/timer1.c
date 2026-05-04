@@ -108,6 +108,7 @@ void setup_timer1(void) {
 
     timer1_channel_A_off();
 
+    /*
     printf("Registers:\r\n");
     printf("Register A: %x\r\n", CONTROL_REGISTER_A);
     printf("Register B: %x\r\n", CONTROL_REGISTER_B);
@@ -116,5 +117,6 @@ void setup_timer1(void) {
     printf("Output compare B: %x\r\n", OUTPUT_COMPARE_B);
     printf("Interrupt mask: %x\r\n", INTERRUPT_MASK);
     printf("Interrupt flags: %x\r\n", INTERRUPT_FLAGS);
+    */
 }
 

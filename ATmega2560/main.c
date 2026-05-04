@@ -13,6 +13,7 @@
 
 int main(void)
 {
+    setup_uart_io(); //setup uart for debuging
     // run in the beginning
     elevator_controller_init();
 

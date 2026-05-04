@@ -1,4 +1,5 @@
 #include "mcu.h"
+#include "uart.h"
 
 //elevator init
 #include <stdint.h>
@@ -52,6 +53,8 @@ int main(void)
     // run in the beginning
     // i2c init
     uint8_t command;
+
+    setup_uart_io(); // setup uart for debuging
 
     i2c_slave_init(ELEVATOR_I2C_ADDRESS);
     outputs_init();
