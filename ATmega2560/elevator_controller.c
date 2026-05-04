@@ -218,6 +218,8 @@ static void elevator_read_floor_input(void)
         {
             elevator_queue_clear();
             elevator_clear_live_request_input();
+            input_value = 0u;
+            digit_count = 0u;
             elevator_display_input(input_value, digit_count);
         }
     }
