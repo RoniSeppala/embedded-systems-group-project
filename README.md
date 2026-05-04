@@ -32,9 +32,8 @@ action leds
 
 # modules to do:
 ## to both
-- critical handling + write error handling
-- maybe uart for debuging
 - deep sleep (maybe timer0)
+  - critical handling + write error handling
 
 ### clear todo list
 - queued floor requests??
@@ -52,14 +51,14 @@ action leds
 | bit_ops | provides functions for bit operations | |
 | uart | allows uart communication | mainly for debuging, allows printf, uart.c premade |
 | elevator_protocol.h | defines the i2c communication between the master and slave | needs to be same on both |
+| stdutils.h | neede by keypad and delay, provides definitions | premade |
+| delay | provides delay functions | premade |
 
 ## master (ATmega2560, Arduino Mega)
 | module name | description | notes |
 |-|-|-|
-| delay | provides delay functions | premade |
 | keypad | provides fuctions for using the keypad | premade |
 | lcd | provides functions for using the lcd | premade |
-| stdutils.h | neede by keypad, provides definitions | premade |
 | elevator_controller | houses main logic for elevator statemachine, lcd and keypad | |
 | i2c_master | handles sending out i2c coms | |
 

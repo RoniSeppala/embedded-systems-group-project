@@ -22,5 +22,7 @@
 #define ELEVATOR_CMD_DOOR_CLOSING   'C'    // Turn on door-closing LED.
 #define ELEVATOR_CMD_OBSTACLE       'X'    // Start obstacle LED blinking and buzzer melody.
 #define ELEVATOR_CMD_BUZZER_STOP    'S'    // Stop buzzer melody.
+#define ELEVATOR_CMD_JINGLE_START  'J'    // Start background jingle.
+#define ELEVATOR_CMD_JINGLE_STOP   'j'    // Stop background jingle.
 
 #endif

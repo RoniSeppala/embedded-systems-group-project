@@ -39,6 +39,14 @@ static void elevator_handle_command(uint8_t command)
             outputs_stop_buzzer();
             break;
 
+        case ELEVATOR_CMD_JINGLE_START:
+            outputs_start_jingle();
+            break;
+
+        case ELEVATOR_CMD_JINGLE_STOP:
+            outputs_stop_jingle();
+            break;
+
         default:
             outputs_all_off();
             break;
