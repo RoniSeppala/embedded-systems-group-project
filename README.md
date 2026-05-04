@@ -1,17 +1,19 @@
 # BL40A1812 Introduction to Embedded Systems
 ## functionality
-Simulates an elevator which can move between floors 0 and 99
+Simulates an elevator which can move between floors 0 and 99.
+The systems supports queueing floors like a normal elevator. # submits the current key to queue, and if elevator is not occupied, it will start moving there. If it is moving currently, or in some other action, the floor will be queued and moved to in the queue order.
 Handles target floor entry through keypad, has logic based on a state machine, provides output using lcd, leds and buzzer.
 keypad actions:
 - enter target floor with numbers
-  - confirm with #
-- use * for clearing
+  - confirm and add to queue with #
+- use * for clearing currently typed floor input
+- use * during open door to trigger obstacle detection
+- D clears the full queue
 action leds
 - movement led
 - obstacle led
 - door opening led
 - door closing led
-
 ## design
 - modular code within files
 # used split
