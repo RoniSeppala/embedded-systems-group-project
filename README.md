@@ -38,7 +38,6 @@ action leds
   - critical handling + write error handling
 
 ### clear todo list
-- queued floor requests??
 - sleep??
 - make some bigger files into multiple smaller files ????
   - break melodies into own files
