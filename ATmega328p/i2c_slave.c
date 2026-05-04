@@ -1,5 +1,6 @@
 #include <avr/io.h>
 #include <stdint.h>
+#include <stdio.h>
 
 #include "bit_ops.h"
 #include "i2c_slave.h"
@@ -53,9 +54,16 @@ uint8_t i2c_slave_receive_byte(uint8_t *data)
     if ((status == 0x80) || (status == 0x90))
     {
         *data = TWDR;
+        printf("RX 0x%02X '%c'\r\n", *data, *data);
         TWCR = (1 << TWINT) | (1 << TWEA) | (1 << TWEN);
 
         return 1;
+    }
+
+    if ((status == 0x60) || (status == 0xA0))
+    {
+        TWCR = (1 << TWINT) | (1 << TWEA) | (1 << TWEN);
+        return 0;
     }
 
     TWCR = (1 << TWINT) | (1 << TWEA) | (1 << TWEN);
