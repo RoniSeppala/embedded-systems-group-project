@@ -30,6 +30,7 @@
  *         Enables the TWI hardware module.
  */
 
+ // Initializes the TWI hardware as a slave using the given 7-bit slave address.
 void i2c_slave_init(uint8_t slave_address)
 {
     TWAR = (slave_address << 1);
@@ -37,6 +38,7 @@ void i2c_slave_init(uint8_t slave_address)
     TWCR = (1 << TWINT) | (1 << TWEA) | (1 << TWEN);
 }
 
+// Polls the TWI hardware and returns 1 when a new byte has been received.
 uint8_t i2c_slave_receive_byte(uint8_t *data)
 {
     uint8_t status;

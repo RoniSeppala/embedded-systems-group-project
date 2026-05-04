@@ -1,6 +1,8 @@
 #ifndef BOARD_CONFIG_H
 #define BOARD_CONFIG_H
 
+#include <avr/io.h>
+
 #define MOVEMENT_LED_DDR DDRD
 #define MOVEMENT_LED_PORT PORTD
 #define MOVEMENT_LED_PIN PD2

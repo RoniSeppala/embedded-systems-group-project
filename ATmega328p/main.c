@@ -1,19 +1,16 @@
 #include "mcu.h"
-#include "uart.h"
 
-//elevator init
 #include <stdint.h>
+
+#include "uart.h"
 #include "elevator_protocol.h"
 #include "i2c_slave.h"
-
-// mega output handling
 #include "outputs.h"
 #include "delay.h"
 
-
 #define UNO_OUTPUT_UPDATE_DELAY_MS (25u)
 
-
+// maps i2c input from mega to actions on this device
 static void elevator_handle_command(uint8_t command)
 {
     switch (command)
@@ -56,8 +53,8 @@ int main(void)
 
     setup_uart_io(); // setup uart for debuging
 
-    i2c_slave_init(ELEVATOR_I2C_ADDRESS);
     outputs_init();
+    i2c_slave_init(ELEVATOR_I2C_ADDRESS);
 
     while (1)
     {

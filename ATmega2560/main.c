@@ -1,15 +1,8 @@
 #include "mcu.h"
 #include "uart.h"
-#include "board_config.h"
-#include "bit_ops.h"
 
 // elevator controller
 #include "elevator_controller.h"
-
-// TODO: add error handling
-
-
-
 
 int main(void)
 {

@@ -13,9 +13,7 @@
 #define OBSTACLE_BLINK_TOGGLE_TICKS (8u)
 #define OBSTACLE_BLINK_TOGGLE_COUNT (6u)
 
-#define OBSTACLE_MELODY_LENGTH (5u)
-
-static const note_t obstacle_melody[OBSTACLE_MELODY_LENGTH] =
+static const note_t obstacle_melody[] =
 {
     { C3, QUARTER },
     { E3, QUARTER },
@@ -23,6 +21,7 @@ static const note_t obstacle_melody[OBSTACLE_MELODY_LENGTH] =
     { E3, QUARTER },
     { C3, QUARTER }
 };
+#define OBSTACLE_MELODY_LENGTH ((uint8_t)(sizeof(obstacle_melody) / sizeof(obstacle_melody[0])))
 
 //variables
 static uint8_t buzzer_active = 0u;
