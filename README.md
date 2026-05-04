@@ -1,4 +1,16 @@
 # BL40A1812 Introduction to Embedded Systems
+## functionality
+Simulates an elevator which can move between floors 0 and 99
+Handles target floor entry through keypad, has logic based on a state machine, provides output using lcd, leds and buzzer.
+keypad actions:
+- enter target floor with numbers
+  - confirm with #
+- use * for clearing
+action leds
+- movement led
+- obstacle led
+- door opening led
+- door closing led
 
 ## design
 - modular code within files
@@ -111,6 +123,16 @@
 | A4/SDA | D20/SDA | 
 | A5/SCL | D21/SCL | 
 | GND | GND | 
+
+# I2C command protocol
+| Command | Meaning |
+|-|-|
+| `'0'` | Turn off all LEDs and buzzer |
+| `'M'` | Turn on movement LED |
+| `'O'` | Turn on door opening LED |
+| `'C'` | Turn on door closing LED |
+| `'X'` | Start obstacle LED blinking and buzzer melody |
+| `'S'` | Stop buzzer melody |
 
 # AI notice
 ChatGPT-5.5 Thinking Extended was used in project planning, error checking, debuging, and commenting
