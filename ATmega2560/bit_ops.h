@@ -18,4 +18,7 @@
 
 /// clear multiple bits
 #define CLEAR_BITS(val, bit, mask) (val &= ~(((__typeof__(val))mask) << bit))
+
+// toggle bit
+#define TOGGLE_BIT(val, bit) (val ^= (((__typeof__(val))1) << bit))
 #endif

@@ -2,6 +2,7 @@
 #include <stdint.h>
 
 #include "board_config.h"
+#include "bit_ops.h"
 #include "outputs.h"
 #include "timer1.h"
 #include "tune.h"
@@ -49,12 +50,12 @@ static uint16_t outputs_ms_to_ticks(uint16_t milliseconds)
 
 static void outputs_obstacle_led_off(void)
 {
-    OBSTACLE_LED_PORT &= ~(1 << OBSTACLE_LED_PIN);
+    CLEAR_BIT(OBSTACLE_LED_PORT, OBSTACLE_LED_PIN);
 }
 
 static void outputs_obstacle_led_toggle(void)
 {
-    OBSTACLE_LED_PORT ^= (1 << OBSTACLE_LED_PIN);
+    TOGGLE_BIT(OBSTACLE_LED_PORT, OBSTACLE_LED_PIN);
 }
 
 static void outputs_start_melody(void)
@@ -79,11 +80,11 @@ static void outputs_start_obstacle_blink(void)
 // functions
 void outputs_init(void)
 {
-    MOVEMENT_LED_DDR |= (1 << MOVEMENT_LED_PIN);
-    DOOR_OPENING_LED_DDR |= (1 << DOOR_OPENING_LED_PIN);
-    DOOR_CLOSING_LED_DDR |= (1 << DOOR_CLOSING_LED_PIN);
-    OBSTACLE_LED_DDR |= (1 << OBSTACLE_LED_PIN);
-    BUZZER_DDR |= (1 << BUZZER_PIN);
+    SET_BIT(MOVEMENT_LED_DDR, MOVEMENT_LED_PIN);
+    SET_BIT(DOOR_OPENING_LED_DDR, DOOR_OPENING_LED_PIN);
+    SET_BIT(DOOR_CLOSING_LED_DDR, DOOR_CLOSING_LED_PIN);
+    SET_BIT(OBSTACLE_LED_DDR, OBSTACLE_LED_PIN);
+    SET_BIT(BUZZER_DDR, BUZZER_PIN);
 
     setup_timer1();
 
@@ -92,11 +93,11 @@ void outputs_init(void)
 
 void outputs_all_off(void)
 {
-    MOVEMENT_LED_PORT &= ~(1 << MOVEMENT_LED_PIN);
-    DOOR_OPENING_LED_PORT &= ~(1 << DOOR_OPENING_LED_PIN);
-    DOOR_CLOSING_LED_PORT &= ~(1 << DOOR_CLOSING_LED_PIN);
-    OBSTACLE_LED_PORT &= ~(1 << OBSTACLE_LED_PIN);
-    BUZZER_PORT &= ~(1 << BUZZER_PIN);
+    CLEAR_BIT(MOVEMENT_LED_PORT, MOVEMENT_LED_PIN);
+    CLEAR_BIT(DOOR_OPENING_LED_PORT, DOOR_OPENING_LED_PIN);
+    CLEAR_BIT(DOOR_CLOSING_LED_PORT, DOOR_CLOSING_LED_PIN);
+    CLEAR_BIT(OBSTACLE_LED_PORT, OBSTACLE_LED_PIN);
+    CLEAR_BIT(BUZZER_PORT, BUZZER_PIN);
 
     buzzer_active = 0u;
     melody_index = 0u;
@@ -113,19 +114,19 @@ void outputs_all_off(void)
 void outputs_set_movement(void)
 {
     outputs_all_off();
-    MOVEMENT_LED_PORT |= (1 << MOVEMENT_LED_PIN);
+    SET_BIT(MOVEMENT_LED_PORT, MOVEMENT_LED_PIN);
 }
 
 void outputs_set_door_opening(void)
 {
     outputs_all_off();
-    DOOR_OPENING_LED_PORT |= (1 << DOOR_OPENING_LED_PIN);
+    SET_BIT(DOOR_OPENING_LED_PORT, DOOR_OPENING_LED_PIN);
 }
 
 void outputs_set_door_closing(void)
 {
     outputs_all_off();
-    DOOR_CLOSING_LED_PORT |= (1 << DOOR_CLOSING_LED_PIN);
+    SET_BIT(DOOR_CLOSING_LED_PORT, DOOR_CLOSING_LED_PIN);
 }
 
 void outputs_set_obstacle(void)

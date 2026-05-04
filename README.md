@@ -130,4 +130,4 @@
 | GND | GND | 
 
 # AI notice
-ChatGPT-5.5 Thinking Extended was used in project planning, error checking and debuging
+ChatGPT-5.5 Thinking Extended was used in project planning, error checking, debuging, and commenting

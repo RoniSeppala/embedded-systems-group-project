@@ -1,7 +1,4 @@
 #include "mcu.h"
-#include "uart.h"
-#include "board_config.h"
-#include "bit_ops.h"
 
 //elevator init
 #include <stdint.h>
@@ -15,7 +12,6 @@
 
 #define UNO_OUTPUT_UPDATE_DELAY_MS (25u)
 
-// TODO: add error handling
 
 static void elevator_handle_command(uint8_t command)
 {
