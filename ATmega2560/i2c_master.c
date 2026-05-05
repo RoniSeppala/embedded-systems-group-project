@@ -34,7 +34,8 @@
  */
 void i2c_master_init(void)
 {
-    TWBR = 0x03;
+    // Standard-mode 100 kHz at F_CPU=16 MHz: TWBR ~= 72, prescaler=1.
+    TWBR = 72;
     TWSR = 0x00;
     SET_BIT(TWCR, TWEN);
 }
@@ -42,31 +43,48 @@ void i2c_master_init(void)
 void i2c_master_send_byte(uint8_t slave_address, uint8_t data)
 {
     uint8_t write_address = (slave_address << 1) | 0;
+    uint8_t attempt;
+    uint8_t status;
 
     printf("TX 0x%02X '%c'\r\n", data, data);
 
-    TWCR = (1 << TWINT) | (1 << TWSTA) | (1 << TWEN);
-
-    while (!READ_BIT(TWCR, TWINT))
+    for (attempt = 0u; attempt < 3u; attempt++)
     {
-        ;
+        TWCR = (1 << TWINT) | (1 << TWSTA) | (1 << TWEN);
+
+        while (!READ_BIT(TWCR, TWINT)) { ; }
+        status = TWSR & 0xF8;
+        printf("MASTER TWSR after START: %02X\r\n", status);
+        if ((status != 0x08) && (status != 0x10))
+        {
+            continue;
+        }
+
+        TWDR = write_address;
+        TWCR = (1 << TWINT) | (1 << TWEN);
+
+        while (!READ_BIT(TWCR, TWINT)) { ; }
+        status = TWSR & 0xF8;
+        printf("MASTER TWSR after ADDR:  %02X\r\n", status);
+        if (status != 0x18)
+        {
+            TWCR = (1 << TWINT) | (1 << TWEN) | (1 << TWSTO);
+            continue;
+        }
+
+        TWDR = data;
+        TWCR = (1 << TWINT) | (1 << TWEN);
+
+        while (!READ_BIT(TWCR, TWINT)) { ; }
+        status = TWSR & 0xF8;
+        printf("MASTER TWSR after DATA:  %02X\r\n", status);
+        TWCR = (1 << TWINT) | (1 << TWEN) | (1 << TWSTO);
+
+        if (status == 0x28)
+        {
+            return;
+        }
     }
 
-    TWDR = write_address;
-    TWCR = (1 << TWINT) | (1 << TWEN);
-
-    while (!READ_BIT(TWCR, TWINT))
-    {
-        ;
-    }
-
-    TWDR = data;
-    TWCR = (1 << TWINT) | (1 << TWEN);
-
-    while (!READ_BIT(TWCR, TWINT))
-    {
-        ;
-    }
-
-    TWCR = (1 << TWINT) | (1 << TWEN) | (1 << TWSTO);
+    printf("MASTER send failed after retries\r\n");
 }

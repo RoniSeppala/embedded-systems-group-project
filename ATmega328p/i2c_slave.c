@@ -48,13 +48,12 @@ uint8_t i2c_slave_receive_byte(uint8_t *data)
     {
         return 0;
     }
-
     status = TWSR & 0xF8;
 
     if ((status == 0x80) || (status == 0x90))
     {
         *data = TWDR;
-        printf("RX 0x%02X '%c'\r\n", *data, *data);
+        printf("RX from slave: status=%02X data=0x%02X '%c'\r\n", status, *data, *data);
         TWCR = (1 << TWINT) | (1 << TWEA) | (1 << TWEN);
 
         return 1;

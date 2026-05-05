@@ -58,6 +58,7 @@ int main(void)
     // run in the beginning
     // i2c init
     uint8_t command;
+    uint8_t output_update_ticks = 0u;
 
     setup_uart_io(); // setup uart for debuging
 
@@ -66,14 +67,20 @@ int main(void)
 
     while (1)
     {
-        // loop
+        // Poll I2C frequently to avoid missing back-to-back transactions.
         if (i2c_slave_receive_byte(&command))
         {
             elevator_handle_command(command);
         }
 
-        outputs_update();
-        DELAY_ms(UNO_OUTPUT_UPDATE_DELAY_MS);
+        DELAY_ms(1);
+        output_update_ticks++;
+
+        if (output_update_ticks >= UNO_OUTPUT_UPDATE_DELAY_MS)
+        {
+            output_update_ticks = 0u;
+            outputs_update();
+        }
     }
  
     return 0;
